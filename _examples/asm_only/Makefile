@@ -2,8 +2,8 @@
 default: compile link run
 compile:
 	fasm main.asm
-	make -C ../
+	make -C ../../
 link:
-	ld main.o ../printf.o -o main 
+	ld main.o ../../printf.o -o main 
 run:
 	./main 

@@ -1,6 +1,3 @@
-section '.bss' writeable 
-    _bss_char db 0
-
 section '.print_char' executable
 ; | input
 ; rax = char
@@ -10,14 +7,16 @@ print_char:
     push rsi
     push rdi
 
-    mov [_bss_char], al
-
-    mov rsi, _bss_char
+    push rax
+    
+    mov rsi, rsp
     mov rdi, 1
     mov rdx, 1
     mov rax, 1
     ; include in printf.asm
     call do_syscall
+
+    add rsp, 8
 
     pop rdi
     pop rsi

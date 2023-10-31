@@ -27,6 +27,9 @@ printf:
     mov rcx, rax
     pop rax 
 
+    ; call/ret    = 8byte
+    ; rax+rbx+rcx = 24byte
+    ; stack       = n*8byte
     mov rbx, 32
     imul rcx, 8
     add rbx, rcx 
