@@ -95,13 +95,25 @@ c_printf:
     ret 
 ```
 
+```asm
+; c_exit.asm
+format ELF64
+
+public c_exit
+
+section '.c_exit' executable
+c_exit:
+    mov rax, 60
+    syscall 
+```
+
 #### Compile & Run
 
 ```
 $ fasm c_exit.asm
 $ fasm c_printf.asm
 $ fasm printf.asm
-$ gcc -nostdlib -no-pie -o main ../../printf.o c_printf.o c_exit.o main.c 
+$ gcc -nostdlib -no-pie -o main printf.o c_printf.o c_exit.o main.c 
 $ ./main
 > { hello, 571! }
 > 3
