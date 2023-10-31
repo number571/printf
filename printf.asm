@@ -1,7 +1,5 @@
 format ELF64
 
-include "do_syscall.asm"
-
 include "print_decimal.asm"
 include "print_string.asm"
 include "print_char.asm"
