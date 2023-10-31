@@ -20,7 +20,6 @@ print_decimal:
         mov rbx, 10
         xor rdx, rdx
         div rbx
-        add rdx, '0'
         push rdx
         inc rcx
         cmp rax, 0
@@ -30,6 +29,7 @@ print_decimal:
         cmp rcx, 0
         je .close
         pop rax
+        add rax, '0'
         call print_char
         dec rcx
         jmp .print_iter
