@@ -3,7 +3,8 @@ default: compile link run
 compile:
 	make -C ../../
 	fasm c_printf.asm
+	fasm c_exit.asm
 link:
-	gcc -no-pie -o main ../../printf.o c_printf.o main.c 
+	gcc --entry main -nostdlib -no-pie -o main ../../printf.o c_printf.o c_exit.o main.c 
 run:
 	./main 

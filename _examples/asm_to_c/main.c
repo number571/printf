@@ -1,5 +1,6 @@
 typedef long long int int64_t;
 
+extern void c_exit(int ret);
 extern int64_t c_printf(char *fmt, ...);
 
 int main(void) {
@@ -13,5 +14,5 @@ int main(void) {
     );
     c_printf("%d\n", ret); // 3
 
-    return 0;
+    c_exit(0);
 }
