@@ -13,7 +13,6 @@ print_char:
     mov rdi, 1
     mov rdx, 1
     mov rax, 1
-    ; include in printf.asm
     call do_syscall
 
     pop rax
