@@ -65,17 +65,17 @@ public c_printf
 section '.c_printf' executable
 c_printf:
     mov rax, rdi
-    push rsi
-    push rdx
-    push rcx
-    push r8
     push r9
+    push r8
+    push rcx
+    push rdx
+    push rsi
     call printf
-    pop r9
-    pop r8
-    pop rcx
-    pop rdx
     pop rsi
+    pop rdx
+    pop rcx
+    pop r8
+    pop r9
     ret 
 ```
 
