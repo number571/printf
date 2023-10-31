@@ -49,7 +49,7 @@ typedef long long int int64_t;
 extern void c_exit(int ret);
 extern int64_t c_printf(char *fmt, ...);
 
-int _start(void) {
+void _start(void) {
     char *string = "hello";
     int64_t decimal = 571;
     char symbol = '!';
