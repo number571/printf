@@ -5,6 +5,6 @@ compile:
 	fasm c_printf.asm
 	fasm c_exit.asm
 link:
-	gcc -nostdlib -no-pie -o main ../../printf.o c_printf.o c_exit.o main.c 
+	gcc -nostdlib -o main ../../printf.o c_printf.o c_exit.o main.c 
 run:
 	./main 
