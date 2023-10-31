@@ -2,9 +2,6 @@ format ELF64
 
 include "do_syscall.asm"
 
-include "print_hex.asm"
-include "print_oct.asm"
-include "print_bin.asm"
 include "print_decimal.asm"
 include "print_string.asm"
 include "print_char.asm"
@@ -40,12 +37,6 @@ printf:
             je .print_string
             cmp [rax], byte 'd'
             je .print_decimal
-            cmp [rax], byte 'b'
-            je .print_bin
-            cmp [rax], byte 'o'
-            je .print_oct
-            cmp [rax], byte 'x'
-            je .print_hex
             cmp [rax], byte 'c'
             je .print_char
             cmp [rax], byte '%'
@@ -61,24 +52,6 @@ printf:
             push rax
             mov rax, [rsp+rbx]
             call print_decimal
-            pop rax
-            jmp .shift_stack
-        .print_bin:
-            push rax
-            mov rax, [rsp+rbx]
-            call print_bin
-            pop rax
-            jmp .shift_stack
-        .print_oct:
-            push rax
-            mov rax, [rsp+rbx]
-            call print_oct
-            pop rax
-            jmp .shift_stack
-        .print_hex:
-            push rax
-            mov rax, [rsp+rbx]
-            call print_hex
             pop rax
             jmp .shift_stack
         .print_char:

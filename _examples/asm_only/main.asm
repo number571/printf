@@ -4,17 +4,17 @@ public _start
 extrn printf
 
 section '.data' writeable
-    input db "list = [%s, %d, %x, %d, %%];", 0xA, 0
-    hello db "hello", 0
-    world dq 123
+    input   db "{ %s, %d%c }", 0xA, 0
+    string  db "hello", 0
+    decimal dq 571
+    symbol  dq '!'
 
 section '.text' executable
 _start:
     mov rax, input
-    push -15
-    push 10
-    push [world]
-    push hello
+    push [symbol]
+    push [decimal]
+    push string
     call printf
 exit:
     mov rax, 60

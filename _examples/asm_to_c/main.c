@@ -3,17 +3,15 @@ typedef long long int int64_t;
 extern int64_t c_printf(char *fmt, ...);
 
 int main(void) {
-    char *str = "hello";
-    int64_t x = 123;
-    int64_t y = 10;
-    int64_t z = -15;
+    char *string = "hello";
+    int64_t decimal = 571;
+    char symbol = '!';
 
     int64_t ret = c_printf(
-        "list = [%s, %d, %x, %d, %%];\n",
-        str,
-        x, y, z
+        "{ %s, %d%c }\n",
+        string, decimal, symbol
     );
-    c_printf("%d\n", ret); // 4
+    c_printf("%d\n", ret); // 3
 
     return 0;
 }

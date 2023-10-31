@@ -2,7 +2,7 @@
 
 Implementation of the printf function in the FASM assembly language.
 
-## Example
+### Example
 
 ```asm
 ; main.asm
@@ -13,36 +13,35 @@ public _start
 extrn printf
 
 section '.data' writeable
-    input db "list = [%s, %d, %x, %d, %%];", 0xA, 0
-    hello db "hello", 0
-    world dq 123
+    input   db "{ %s, %d%c }", 0xA, 0
+    string  db "hello", 0
+    decimal dq 571
+    symbol  dq '!'
 
 section '.text' executable
 _start:
     mov rax, input
-    push -15
-    push 10
-    push [world]
-    push hello
+    push [symbol]
+    push [decimal]
+    push string
     call printf
 exit:
-    mov rax, 1
-    xor rbx, rbx 
-    int 0x80
+    mov rax, 60
+    xor rdi, rdi 
+    syscall 
 ```
 
-### Compile & Run
+#### Compile & Run
 
 ```
 $ fasm main.asm
 $ fasm printf.asm
 $ ld main.o printf.o -o main 
-$ ./main
-> list = [hello, 123, 0xA, -15, %];
+> { hello, 571! }
 >
 ```
 
-## Also example with C code
+### Also example with C code
 
 ```c
 // main.c
@@ -51,17 +50,15 @@ typedef long long int int64_t;
 extern int64_t c_printf(char *fmt, ...);
 
 int main(void) {
-    char *str = "hello";
-    int x = 123;
-    int y = 10;
-    int z = -15;
+    char *string = "hello";
+    int64_t decimal = 571;
+    char symbol = '!';
 
     int64_t ret = c_printf(
-        "list = [%s, %d, %x, %d, %%];\n",
-        str,
-        x, y, z
+        "{ %s, %d%c }\n",
+        string, decimal, symbol
     );
-    c_printf("%d\n", ret); // 4
+    c_printf("%d\n", ret); // 3
 
     return 0;
 }
@@ -94,14 +91,14 @@ c_printf:
     ret 
 ```
 
-### Compile & Run
+#### Compile & Run
 
 ```
 $ fasm c_printf.asm
 $ fasm printf.asm
 $ gcc -no-pie -o main printf.o c_printf.o main.c 
 $ ./main
-> list = [hello, 123, 0xA, -15, %];
-> 4
+> { hello, 571! }
+> 3
 > 
 ```
