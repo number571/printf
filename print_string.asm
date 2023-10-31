@@ -14,6 +14,5 @@ print_string:
         inc rbx
         jmp .next_iter
     .close:
-        mov rax, rbx
         pop rbx
         ret
