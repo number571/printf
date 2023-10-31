@@ -101,7 +101,7 @@ c_printf:
 $ fasm c_exit.asm
 $ fasm c_printf.asm
 $ fasm printf.asm
-$ gcc --entry main -nostdlib -no-pie -o main ../../printf.o c_printf.o c_exit.o main.c 
+$ gcc -nostdlib -no-pie -o main ../../printf.o c_printf.o c_exit.o main.c 
 $ ./main
 > { hello, 571! }
 > 3
