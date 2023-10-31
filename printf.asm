@@ -3,7 +3,6 @@ format ELF64
 include "print_decimal.asm"
 include "print_string.asm"
 include "print_char.asm"
-include "print_line.asm"
 
 public printf
 
@@ -63,9 +62,6 @@ printf:
             mov rax, [rax]
             call print_char
             pop rax
-            jmp .next_step
-        .print_line:
-            call print_line
             jmp .next_step
         .shift_stack:
             inc rcx
