@@ -1,6 +1,6 @@
 # printf
 
-Implementation of the printf function in the FASM assembly language.
+Implementation of the printf function in the FASM assembly language. An example was also added using the printf function in the C programming language without using the standard library.
 
 ### Example
 
