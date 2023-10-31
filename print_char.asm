@@ -16,7 +16,7 @@ print_char:
     ; include in printf.asm
     call do_syscall
 
-    add rsp, 8
+    pop rax
 
     pop rdi
     pop rsi
