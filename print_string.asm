@@ -1,25 +1,19 @@
-include "length_string.asm"
-
 section '.print_string' executable
 ; | input
 ; rax = string
 print_string:
-    push rax
-    push rdx
-    push rsi
-    push rdi
-
-    mov rsi, rax
-    call length_string
-
-    mov rdx, rax
-    mov rdi, 1
-    mov rax, 1
-    ; include in printf.asm
-    call do_syscall
-
-    pop rdi
-    pop rsi
-    pop rdx
-    pop rax
-    ret
+    push rbx
+    xor rbx, rbx
+    .next_iter:
+        cmp [rax+rbx], byte 0
+        je .close
+        push rax 
+        mov rax, [rax+rbx]
+        call print_char
+        pop rax 
+        inc rbx
+        jmp .next_iter
+    .close:
+        mov rax, rbx
+        pop rbx
+        ret
