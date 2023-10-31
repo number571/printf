@@ -9,7 +9,6 @@ include "print_decimal.asm"
 include "print_string.asm"
 include "print_char.asm"
 include "print_line.asm"
-include "count_specials.asm"
 
 public printf
 
@@ -17,30 +16,23 @@ section '.printf' executable
 ; | input:
 ; rax = format
 ; stack = values
+; | output:
+; rax = count
 printf:
-    push rax
     push rbx
     push rcx
 
-    push rax 
-    call count_specials
-    mov rcx, rax
-    pop rax 
-
     ; call/ret    = 8byte
     ; rax+rbx+rcx = 24byte
-    ; stack       = n*8byte
     mov rbx, 32
-    imul rcx, 8
-    add rbx, rcx 
 
+    ; count of format elements
+    xor rcx, rcx 
     .next_iter:
         cmp [rax], byte 0
         je .close
         cmp [rax], byte '%'
         je .special_char
-        cmp [rax], byte '\'
-        je .special_null_char
         jmp .default_char
         .special_char:
             inc rax
@@ -58,14 +50,7 @@ printf:
             je .print_char
             cmp [rax], byte '%'
             je .default_char
-            jmp .next_step
-        .special_null_char:
-            inc rax
-            cmp [rax], byte 'n'
-            je .print_line
-            cmp [rax], byte '\'
-            je .default_char
-            jmp .next_step
+            jmp .is_error
         .print_string:
             push rax
             mov rax, [rsp+rbx]
@@ -112,12 +97,15 @@ printf:
             call print_line
             jmp .next_step
         .shift_stack:
-            sub rbx, 8
+            inc rcx
+            add rbx, 8
         .next_step:
             inc rax
             jmp .next_iter
+    .is_error:
+        mov rcx, -1
     .close:
+        mov rax, rcx
         pop rcx
         pop rbx
-        pop rax
         ret

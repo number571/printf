@@ -13,17 +13,17 @@ public _start
 extrn printf
 
 section '.data' writeable
-    input db "list = [%s, %d, %x, %d, %%, \\n];\n", 0
+    input db "list = [%s, %d, %x, %d, %%];", 0xA, 0
     hello db "hello", 0
     world dq 123
 
 section '.text' executable
 _start:
     mov rax, input
-    push hello
-    push [world]
-    push 10
     push -15
+    push 10
+    push [world]
+    push hello
     call printf
 exit:
     mov rax, 1
@@ -38,7 +38,7 @@ $ fasm main.asm
 $ fasm printf.asm
 $ ld main.o printf.o -o main 
 $ ./main
-> list = [hello, 123, 0xA, -15, %, \n];
+> list = [hello, 123, 0xA, -15, %];
 >
 ```
 
@@ -46,10 +46,23 @@ $ ./main
 
 ```c
 // main.c
-extern int c_printf(char *fmt, ...);
+typedef long long int int64_t;
+
+extern int64_t c_printf(char *fmt, ...);
 
 int main(void) {
-    c_printf("hello, %d!\n", 571);
+    char *str = "hello";
+    int x = 123;
+    int y = 10;
+    int z = -15;
+
+    int64_t ret = c_printf(
+        "list = [%s, %d, %x, %d, %%];\n",
+        str,
+        x, y, z
+    );
+    c_printf("%d\n", ret); // 4
+
     return 0;
 }
 ```
@@ -64,13 +77,15 @@ public c_printf
 
 section '.c_printf' executable
 c_printf:
-    mov rax, rdi
     push r9
     push r8
     push rcx
     push rdx
     push rsi
+
+    mov rax, rdi
     call printf
+
     pop rsi
     pop rdx
     pop rcx
@@ -86,6 +101,7 @@ $ fasm c_printf.asm
 $ fasm printf.asm
 $ gcc -no-pie -o main printf.o c_printf.o main.c 
 $ ./main
-> hello, 571!
->
+> list = [hello, 123, 0xA, -15, %];
+> 4
+> 
 ```
