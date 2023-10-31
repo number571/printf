@@ -6,7 +6,6 @@ Implementation of the printf function in the FASM assembly language. An example 
 
 ```asm
 ; main.asm
-
 format ELF64
 public _start
 
