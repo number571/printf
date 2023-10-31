@@ -6,6 +6,8 @@ public c_printf
 
 section '.c_printf' executable
 c_printf:
+    pop r10
+
     push r9
     push r8
     push rcx
@@ -20,4 +22,6 @@ c_printf:
     pop rcx
     pop r8
     pop r9
+
+    push r10 
     ret 
