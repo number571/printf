@@ -49,7 +49,7 @@ typedef long long int int64_t;
 extern void c_exit(int ret);
 extern int64_t c_printf(char *fmt, ...);
 
-int main(void) {
+int _start(void) {
     char *string = "hello";
     int64_t decimal = 571;
     char symbol = '!';
@@ -74,6 +74,8 @@ public c_printf
 
 section '.c_printf' executable
 c_printf:
+    pop r10
+
     push r9
     push r8
     push rcx
@@ -88,6 +90,8 @@ c_printf:
     pop rcx
     pop r8
     pop r9
+
+    push r10 
     ret 
 ```
 
