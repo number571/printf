@@ -1,4 +1,5 @@
 # printf
+> https://habr.com/ru/articles/766044/
 
 Implementation of the printf function in the FASM assembly language. An example was also added using the printf function in the C programming language without using the standard library.
 
