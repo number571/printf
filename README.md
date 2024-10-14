@@ -33,10 +33,9 @@ exit:
 
 #### Compile & Run
 
-```
-$ fasm main.asm
-$ fasm printf.asm
-$ ld main.o printf.o -o main 
+```bash
+$ cd examples/asm_only
+$ make
 > { hello, 571! }
 >
 ```
@@ -110,13 +109,9 @@ c_exit:
 
 #### Compile & Run
 
-```
-$ fasm c_exit.asm
-$ fasm c_printf.asm
-$ fasm printf.asm
-$ gcc -nostdlib -o main printf.o c_printf.o c_exit.o main.c 
-$ ./main
+```bash
+$ cd examples/asm_to_c
+$ make
 > { hello, 571! }
-> 3
-> 
+>
 ```
